@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'My-Consumption'),
+      home: MyHomePage(title: 'My Consumption'),
     );
   }
 }
@@ -63,25 +63,26 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Your chopps:',
+            FloatingActionButton(
+              onPressed: _decrementCounter,
+              tooltip: 'Decrement',
+              child: Icon(Icons.remove),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            Image.asset(
+              'assets/images/chopp.png',
+              fit: BoxFit.cover,
             ),
             FloatingActionButton(
               onPressed: _incrementCounter,
               tooltip: 'Increment',
               child: Icon(Icons.add),
             ),
-            FloatingActionButton(
-              onPressed: _decrementCounter,
-              tooltip: 'Decrement',
-              child: Icon(Icons.remove),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.display1,
             ),
             Text(
-              '$_valuePrecision'
+              'RS $_valuePrecision'
             )
           ],
         ),
