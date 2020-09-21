@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,17 +78,19 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'Increment',
               child: Icon(Icons.add),
             ),
+            Spacer(),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+            Spacer(),
             Text(
-              'RS $_valuePrecision'
+              'RS $_valuePrecision',
+                style: Theme.of(context).textTheme.display1,
             )
           ],
         ),
       ),
-        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
