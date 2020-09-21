@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Consumption',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: MyHomePage(title: 'My Consumption'),
     );
@@ -60,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
+        height: 130.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
