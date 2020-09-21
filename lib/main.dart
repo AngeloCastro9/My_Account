@@ -47,6 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_counter <= 0){
         _counter = 0;
       }
+      if(_valuePrecision <= 0){
+        _valuePrecision = 0;
+      }
     });
   }
 
@@ -80,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_valuePrecision'
             )
-
           ],
         ),
       ),
