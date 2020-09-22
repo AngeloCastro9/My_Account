@@ -36,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   double _valuePrecisionWater = 0;
   double _priceFood = 0;
   double _valuePrecisionFood = 0;
-  double _finalPriceFood = 0;
   TextEditingController _priceFoodController = new TextEditingController();
 
   // begin chopp
@@ -85,21 +84,66 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
-
   // final water
 
   //begin food
-
   void _addPriceFood(){
     setState(() {
-      _priceFood = num.tryParse(_priceFoodController.text);
-      print('$_priceFood  price');
-      double _finalPriceFood = _priceFood + _valuePrecisionFood;
-      print('$_valuePrecisionFood precision');
-      _valuePrecisionFood = num.parse(_finalPriceFood.toStringAsPrecision(4));
-      print('$_finalPriceFood final');
+      if(_priceFoodController.text == ''){
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("Price empty"),
+              content: new Text("Please enter a valid value"),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
+      _priceFood = num.tryParse(_priceFoodController.text).toDouble();
+
+      if (_priceFood == null){
+        print(_priceFood);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("Price invalid"),
+              content: new Text("Please enter a valid value"),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+      else{
+        double _finalPriceFood = _priceFood + _valuePrecisionFood;
+        _valuePrecisionFood = num.parse(_finalPriceFood.toStringAsPrecision(4));
+        print('$_finalPriceFood final');
+
+        if(_valuePrecisionFood <= 0){
+          _valuePrecisionFood = 0;
+        }
+      }
     });
   }
+  //end food
 
   @override
   Widget build(BuildContext context) {
@@ -188,17 +232,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       fit: BoxFit.cover,
                     ),
 
-                    SizedBox(width: 100, child: TextField(
+                    SizedBox(width: 100, child: TextFormField(
                       controller: _priceFoodController,
-                      decoration: new InputDecoration(labelText: "Enter your number"),
+                      decoration: new InputDecoration(labelText: "Enter food price"),
                       keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-
-                      ],
                     )),
                     FloatingActionButton(
                       onPressed: _addPriceFood,
-                      //tooltip: 'textStyle',
                       child: Icon(Icons.add),
                     ),
                     Spacer(),
