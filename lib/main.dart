@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -89,12 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: new Container(
-         // color: Color(0xff258DED),
-          height: 400.0,
           alignment: Alignment.center,
           child: new Column(
             children: [
               new Container(
+                height: 130.0,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -127,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               new Container(
+                height: 130.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -150,6 +151,38 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: Theme.of(context).textTheme.display1,
                     ),
                     Spacer(),
+                    Text(
+                      'RS $_valuePrecisionWater',
+                      style: Theme.of(context).textTheme.display1,
+                    ),
+                  ],
+                ),
+              ),
+
+              new Container(
+                height: 130.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/food.png',
+                      fit: BoxFit.cover,
+                    ),
+
+                    SizedBox(width: 100, child: TextField(
+                      decoration: new InputDecoration(labelText: "Enter your number"),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+
+                      ],
+                    )),
+                    FloatingActionButton(
+                      onPressed: _incrementCounterWater,
+                      tooltip: 'Increment',
+                      child: Icon(Icons.add),
+                    ),
+                    Spacer(),
+
                     Text(
                       'RS $_valuePrecisionWater',
                       style: Theme.of(context).textTheme.display1,
