@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Account',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: MyHomePage(title: 'My Account'),
     );
@@ -232,8 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
+      return Scaffold(
         resizeToAvoidBottomPadding  : false,
         appBar: AppBar(
           title: Text(widget.title),
@@ -381,7 +380,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
