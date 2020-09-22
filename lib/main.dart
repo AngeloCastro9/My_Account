@@ -36,14 +36,22 @@ class _MyHomePageState extends State<MyHomePage> {
   double _valuePrecisionWater = 0;
   double _priceFood = 0;
   double _valuePrecisionFood = 0;
+  double _priceOthers = 0;
+  double _valuePrecisionOthers = 0;
   double _totalAccount = 0;
   double _totalAccountPrecision = 0;
   TextEditingController _priceFoodController = new TextEditingController();
+  TextEditingController _priceOthersController = new TextEditingController();
 
   void totalAccount(){
     setState(() {
-      _totalAccount = _valuePrecisionChopp + _valuePrecisionWater + _valuePrecisionFood;
+      _totalAccount = _valuePrecisionChopp + _valuePrecisionWater + _valuePrecisionFood + _valuePrecisionOthers;
       _totalAccountPrecision = num.parse(_totalAccount.toStringAsPrecision(4));
+
+      if(_totalAccountPrecision <= 0){
+        _totalAccountPrecision = 0;
+      }
+      print(_totalAccountPrecision);
     });
   }
 
@@ -66,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_counterChopp <= 0){
         _counterChopp = 0;
       }
-      if(_valuePrecisionChopp <= 0){
+      if(_valuePrecisionChopp < 0){
         _valuePrecisionChopp = 0;
       }
       totalAccount();
@@ -127,12 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
       else{
         _priceFood = num.tryParse(_priceFoodController.text).toDouble();
 
-        if(_priceFood == 0){
+        if(_priceFood == 0 || _priceFood < 0){
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: new Text("Price can't be 0"),
+                title: new Text("Price can't be 0 or negative"),
                 content: new Text("Please enter a valid value"),
                 actions: <Widget>[
                   new FlatButton(
@@ -150,21 +158,73 @@ class _MyHomePageState extends State<MyHomePage> {
 
         double _finalPriceFood = _priceFood + _valuePrecisionFood;
         _valuePrecisionFood = num.parse(_finalPriceFood.toStringAsPrecision(4));
-        print('$_finalPriceFood final');
-
-        if(_valuePrecisionFood <= 0){
-          _valuePrecisionFood = 0;
-        }
       }
       totalAccount();
     });
   }
   //end food
 
+  //begin others
+  void _addPriceOthers(){
+    setState(() {
+      if(_priceOthersController.text == ''){
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("Price empty"),
+              content: new Text("Please enter a valid value"),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
+      else{
+        _priceOthers = num.tryParse(_priceOthersController.text).toDouble();
+
+        if(_priceOthers == 0 || _priceOthers < 0){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Price can't be 0 or negative"),
+                content: new Text("Please enter a valid value"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Close"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return;
+        }
+
+        double _finalPriceOthers = _priceOthers + _valuePrecisionOthers;
+        _valuePrecisionOthers = num.parse(_finalPriceOthers.toStringAsPrecision(4));
+      }
+      totalAccount();
+    });
+  }
+  //end others
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
+        resizeToAvoidBottomPadding  : false,
         appBar: AppBar(
           title: Text(widget.title),
         ),
@@ -198,7 +258,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         '$_counterChopp',
                         style: Theme.of(context).textTheme.display1,
                       ),
-
                     ],
                 ),
               ),
@@ -258,8 +317,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+
               new Container(
                 height: 130.0,
+                width: 250,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Spacer(),
+                    Image.asset(
+                      'assets/images/others.png',
+                      fit: BoxFit.cover,
+                    ),
+
+                    SizedBox(width: 100, child: TextFormField(
+                      controller: _priceOthersController,
+                      decoration: new InputDecoration(labelText: "Price"),
+                      keyboardType: TextInputType.number,
+                    )),
+
+                    FloatingActionButton(
+                      onPressed: _addPriceOthers,
+                      child: Icon(Icons.add),
+                    ),
+                  ],
+                ),
+              ),
+
+              new Container(
+                height: 50.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
