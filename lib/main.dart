@@ -37,7 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
   double _priceFood = 0;
   double _valuePrecisionFood = 0;
   double _totalAccount = 0;
+  double _totalAccountPrecision = 0;
   TextEditingController _priceFoodController = new TextEditingController();
+
+  void totalAccount(){
+    setState(() {
+      _totalAccount = _valuePrecisionChopp + _valuePrecisionWater + _valuePrecisionFood;
+      _totalAccountPrecision = num.parse(_totalAccount.toStringAsPrecision(4));
+    });
+  }
+
 
   // begin chopp
   void _incrementCounterChopp() {
@@ -45,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _counterChopp++;
       _totalAccountChopp = (_counterChopp * 4.9);
       _valuePrecisionChopp = num.parse(_totalAccountChopp.toStringAsPrecision(4));
+      totalAccount();
     });
   }
 
@@ -59,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_valuePrecisionChopp <= 0){
         _valuePrecisionChopp = 0;
       }
+      totalAccount();
     });
   }
   // final chopp
@@ -67,15 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounterWater() {
     setState(() {
       _counterWater++;
-      _totalAccountWater = (_counterWater * 6.9);
+      _totalAccountWater = (_counterWater * 5.9);
       _valuePrecisionWater = num.parse(_totalAccountWater.toStringAsPrecision(4));
+      totalAccount();
     });
   }
 
   void _decrementCounterWater() {
     setState(() {
       _counterWater--;
-      _totalAccountWater = _counterWater * 6.9;
+      _totalAccountWater = _counterWater * 5.9;
       _valuePrecisionWater = num.parse(_totalAccountWater.toStringAsPrecision(4));
       if(_counterWater <= 0){
         _counterWater = 0;
@@ -83,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_valuePrecisionWater <= 0){
         _valuePrecisionWater = 0;
       }
+      totalAccount();
     });
   }
   // final water
@@ -143,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _valuePrecisionFood = 0;
         }
       }
+      totalAccount();
     });
   }
   //end food
@@ -160,9 +174,11 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               new Container(
                 height: 130.0,
+                width: 250,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Spacer(),
                       FloatingActionButton(
                         onPressed: _decrementCounterChopp,
                         tooltip: 'Decrement',
@@ -182,20 +198,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         '$_counterChopp',
                         style: Theme.of(context).textTheme.display1,
                       ),
-                      Spacer(),
-                      Text(
-                        'RS $_valuePrecisionChopp',
-                        style: Theme.of(context).textTheme.display1,
-                      ),
+
                     ],
                 ),
               ),
 
               new Container(
                 height: 130.0,
+                width: 250,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Spacer(),
                     FloatingActionButton(
                       onPressed: _decrementCounterWater,
                       tooltip: 'Decrement',
@@ -215,20 +229,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       '$_counterWater',
                       style: Theme.of(context).textTheme.display1,
                     ),
-                    Spacer(),
-                    Text(
-                      'RS $_valuePrecisionWater',
-                      style: Theme.of(context).textTheme.display1,
-                    ),
                   ],
                 ),
               ),
 
               new Container(
                 height: 130.0,
+                width: 250,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Spacer(),
                     Image.asset(
                       'assets/images/food.png',
                       fit: BoxFit.cover,
@@ -236,17 +247,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     SizedBox(width: 100, child: TextFormField(
                       controller: _priceFoodController,
-                      decoration: new InputDecoration(labelText: "Enter food price"),
+                      decoration: new InputDecoration(labelText: "Price"),
                       keyboardType: TextInputType.number,
                     )),
+
                     FloatingActionButton(
                       onPressed: _addPriceFood,
                       child: Icon(Icons.add),
                     ),
-                    Spacer(),
-
+                  ],
+                ),
+              ),
+              new Container(
+                height: 130.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Text(
-                      'RS $_valuePrecisionFood',
+                      'TOTAL: RS $_totalAccountPrecision',
                       style: Theme.of(context).textTheme.display1,
                     ),
                   ],
