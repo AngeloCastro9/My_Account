@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Consumption',
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'My Consumption'),
     );
@@ -47,11 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _totalAccount = _valuePrecisionChopp + _valuePrecisionWater + _valuePrecisionFood + _valuePrecisionOthers;
       _totalAccountPrecision = num.parse(_totalAccount.toStringAsPrecision(4));
-
-      if(_totalAccountPrecision <= 0){
-        _totalAccountPrecision = 0;
-      }
-      print(_totalAccountPrecision);
     });
   }
 
@@ -220,6 +215,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   //end others
 
+  void clearAll(){
+    setState(() {
+      _totalAccount = 0;
+      _valuePrecisionChopp = 0;
+      _valuePrecisionWater = 0;
+      _valuePrecisionFood = 0;
+      _valuePrecisionOthers = 0;
+      _counterChopp = 0;
+      _counterWater = 0;
+      _totalAccountPrecision = 0;
+      _priceFoodController.clear();
+      _priceOthersController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -293,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               new Container(
-                height: 130.0,
+                height: 110.0,
                 width: 250,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -319,7 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               new Container(
-                height: 130.0,
+                height: 110.0,
                 width: 250,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +345,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       decoration: new InputDecoration(labelText: "Price"),
                       keyboardType: TextInputType.number,
                     )),
-
                     FloatingActionButton(
                       onPressed: _addPriceOthers,
                       child: Icon(Icons.add),
@@ -345,13 +354,26 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               new Container(
-                height: 50.0,
+                height: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'TOTAL: RS $_totalAccountPrecision',
                       style: Theme.of(context).textTheme.display1,
+                    ),
+                  ],
+                ),
+              ),
+
+              new Container(
+                height: 80.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FloatingActionButton.extended(
+                      onPressed: clearAll,
+                      label: Text('Clear'),
                     ),
                   ],
                 ),
