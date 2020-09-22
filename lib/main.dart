@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double _valuePrecisionWater = 0;
   double _priceFood = 0;
   double _valuePrecisionFood = 0;
+  double _totalAccount = 0;
   TextEditingController _priceFoodController = new TextEditingController();
 
   // begin chopp
@@ -110,29 +111,30 @@ class _MyHomePageState extends State<MyHomePage> {
         return;
       }
 
-      _priceFood = num.tryParse(_priceFoodController.text).toDouble();
-
-      if (_priceFood == null){
-        print(_priceFood);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: new Text("Price invalid"),
-              content: new Text("Please enter a valid value"),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("Close"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
       else{
+        _priceFood = num.tryParse(_priceFoodController.text).toDouble();
+
+        if(_priceFood == 0){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Price can't be 0"),
+                content: new Text("Please enter a valid value"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Close"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return;
+        }
+
         double _finalPriceFood = _priceFood + _valuePrecisionFood;
         _valuePrecisionFood = num.parse(_finalPriceFood.toStringAsPrecision(4));
         print('$_finalPriceFood final');
