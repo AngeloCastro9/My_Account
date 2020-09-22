@@ -34,6 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counterWater = 0;
   double _totalAccountWater= 0;
   double _valuePrecisionWater = 0;
+  double _priceFood = 0;
+  double _valuePrecisionFood = 0;
+  double _finalPriceFood = 0;
+  TextEditingController _priceFoodController = new TextEditingController();
 
   // begin chopp
   void _incrementCounterChopp() {
@@ -79,6 +83,21 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_valuePrecisionWater <= 0){
         _valuePrecisionWater = 0;
       }
+    });
+  }
+
+  // final water
+
+  //begin food
+
+  void _addPriceFood(){
+    setState(() {
+      _priceFood = num.tryParse(_priceFoodController.text);
+      print('$_priceFood  price');
+      double _finalPriceFood = _priceFood + _valuePrecisionFood;
+      print('$_valuePrecisionFood precision');
+      _valuePrecisionFood = num.parse(_finalPriceFood.toStringAsPrecision(4));
+      print('$_finalPriceFood final');
     });
   }
 
@@ -170,6 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 
                     SizedBox(width: 100, child: TextField(
+                      controller: _priceFoodController,
                       decoration: new InputDecoration(labelText: "Enter your number"),
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -177,14 +197,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     )),
                     FloatingActionButton(
-                      onPressed: _incrementCounterWater,
-                      tooltip: 'Increment',
+                      onPressed: _addPriceFood,
+                      //tooltip: 'textStyle',
                       child: Icon(Icons.add),
                     ),
                     Spacer(),
 
                     Text(
-                      'RS $_valuePrecisionWater',
+                      'RS $_valuePrecisionFood',
                       style: Theme.of(context).textTheme.display1,
                     ),
                   ],
