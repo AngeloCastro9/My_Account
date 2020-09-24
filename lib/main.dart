@@ -28,9 +28,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counterChopp = 0;
-  double _totalAccountChopp= 0;
-  double _valuePrecisionChopp = 0;
+  int _counterDraftBeer = 0;
+  double _totalAccountDraftBeer= 0;
+  double _valuePrecisionDraftBeer = 0;
   int _counterWater = 0;
   double _totalAccountWater= 0;
   double _valuePrecisionWater = 0;
@@ -45,37 +45,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void totalAccount(){
     setState(() {
-      _totalAccount = _valuePrecisionChopp + _valuePrecisionWater + _valuePrecisionFood + _valuePrecisionOthers;
+      _totalAccount = _valuePrecisionDraftBeer + _valuePrecisionWater + _valuePrecisionFood + _valuePrecisionOthers;
       _totalAccountPrecision = num.parse(_totalAccount.toStringAsPrecision(4));
     });
   }
 
 
-  // begin chopp
-  void _incrementCounterChopp() {
+  // begin DraftBeer
+  void _incrementCounterDraftBeer() {
     setState(() {
-      _counterChopp++;
-      _totalAccountChopp = (_counterChopp * 4.9);
-      _valuePrecisionChopp = num.parse(_totalAccountChopp.toStringAsPrecision(4));
+      _counterDraftBeer++;
+      _totalAccountDraftBeer = (_counterDraftBeer * 4.9);
+      _valuePrecisionDraftBeer = num.parse(_totalAccountDraftBeer.toStringAsPrecision(4));
       totalAccount();
     });
   }
 
-  void _decrementCounterChopp() {
+  void _decrementCounterDraftBeer() {
     setState(() {
-      _counterChopp--;
-      _totalAccountChopp = _counterChopp * 4.9;
-      _valuePrecisionChopp = num.parse(_totalAccountChopp.toStringAsPrecision(4));
-      if(_counterChopp <= 0){
-        _counterChopp = 0;
+      _counterDraftBeer--;
+      _totalAccountDraftBeer = _counterDraftBeer * 4.9;
+      _valuePrecisionDraftBeer = num.parse(_totalAccountDraftBeer.toStringAsPrecision(4));
+      if(_counterDraftBeer <= 0){
+        _counterDraftBeer = 0;
       }
-      if(_valuePrecisionChopp < 0){
-        _valuePrecisionChopp = 0;
+      if(_valuePrecisionDraftBeer < 0){
+        _valuePrecisionDraftBeer = 0;
       }
       totalAccount();
     });
   }
-  // final chopp
+  // final DraftBeer
 
   // begin water
   void _incrementCounterWater() {
@@ -218,11 +218,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void clearAll(){
     setState(() {
       _totalAccount = 0;
-      _valuePrecisionChopp = 0;
+      _valuePrecisionDraftBeer = 0;
       _valuePrecisionWater = 0;
       _valuePrecisionFood = 0;
       _valuePrecisionOthers = 0;
-      _counterChopp = 0;
+      _counterDraftBeer = 0;
       _counterWater = 0;
       _totalAccountPrecision = 0;
       _priceFoodController.clear();
@@ -249,22 +249,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Spacer(),
                       FloatingActionButton(
-                        onPressed: _decrementCounterChopp,
+                        onPressed: _decrementCounterDraftBeer,
                         tooltip: 'Decrement',
                         child: Icon(Icons.remove),
                       ),
                       Image.asset(
-                        'assets/images/chopp.png',
+                        'assets/images/draftBeer.png',
                         fit: BoxFit.cover,
                       ),
                       FloatingActionButton(
-                        onPressed: _incrementCounterChopp,
+                        onPressed: _incrementCounterDraftBeer,
                         tooltip: 'Increment',
                         child: Icon(Icons.add),
                       ),
                       Spacer(),
                       Text(
-                        '$_counterChopp',
+                        '$_counterDraftBeer',
                         style: Theme.of(context).textTheme.display1,
                       ),
                     ],
